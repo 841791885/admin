@@ -8,7 +8,6 @@ import { renderRoutes } from 'react-router-config'
 import RouteGuard from './components/route-guard/route-guard'
 import store from './store'
 import routes from './routes'
-// import Main from '@/views/main/main'
 
 function App() {
   return (

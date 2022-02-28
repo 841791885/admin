@@ -10,9 +10,8 @@ import LoginPhone from '../login-phone/login-phone'
 import { accountLogin } from '@/store/login/actionCreators'
 import { LoginPanelWrapper } from './style'
 
+const { TabPane } = Tabs
 export default function LoginPanel() {
-  const { TabPane } = Tabs
-
   const [name, setName] = useState('account')
   const loginAccountRef = useRef()
 

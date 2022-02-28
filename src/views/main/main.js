@@ -1,16 +1,27 @@
 import React, { memo } from 'react'
-import { useHistory } from 'react-router-dom'
 import { renderRoutes } from 'react-router-config'
+import { Layout } from 'antd'
+
+import { MainWrapper } from './style'
+const { Header, Sider, Content } = Layout
+
 const Main = memo((props) => {
   const {
     route: { children }
   } = props
-  const History = useHistory()
-  const jumplogin = () => {
-    History.push({ pathname: '/login' })
-  }
+  const jumplogin = () => {}
 
-  return <div onClick={jumplogin}>child{renderRoutes(children)}</div>
+  return (
+    <MainWrapper onClick={jumplogin}>
+      <Layout>
+        <Sider>Sider</Sider>
+        <Layout>
+          <Header>Header</Header>
+          <Content>{renderRoutes(children)}</Content>
+        </Layout>
+      </Layout>
+    </MainWrapper>
+  )
 })
 
 export default Main

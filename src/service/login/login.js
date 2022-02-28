@@ -12,3 +12,15 @@ export function accountLoginRequest(account) {
     data: account
   })
 }
+
+export function getUserById(id) {
+  return requestIns.get({
+    url: mapLoginAPI.UserInfo + id
+  })
+}
+
+export function getUserMenus(id) {
+  return requestIns.get({
+    url: mapLoginAPI.UserMenus + id + '/menu'
+  })
+}
