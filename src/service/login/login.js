@@ -1,6 +1,5 @@
 import requestIns from '../index'
 
-console.log(requestIns)
 const mapLoginAPI = {
   AccountLogin: '/login',
   UserInfo: '/users/',

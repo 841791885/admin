@@ -1,15 +1,23 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 
 import { Provider } from 'react-redux'
-import store from './store'
 
-// import Main from '@/pages/main/main'
-import Login from '@/pages/login/login'
+import { BrowserRouter } from 'react-router-dom'
+import { renderRoutes } from 'react-router-config'
+
+import RouteGuard from './components/route-guard/route-guard'
+import store from './store'
+import routes from './routes'
+// import Main from '@/views/main/main'
 
 function App() {
   return (
     <Provider store={store}>
-      <Login />
+      <BrowserRouter>
+        <Suspense fallback={<div>loading</div>}>
+          <RouteGuard>{renderRoutes(routes)}</RouteGuard>
+        </Suspense>
+      </BrowserRouter>
     </Provider>
   )
 }
