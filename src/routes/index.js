@@ -2,6 +2,7 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 
 const Login = React.lazy((_) => import('@/views/login/login'))
+const NotFound = React.lazy((_) => import('@/views/not-found/not-found'))
 const Main = React.lazy((_) => import('@/views/main/main'))
 const User = React.lazy((_) => import('@/views/main/system/user/user'))
 
@@ -22,6 +23,11 @@ const router = [
         component: User
       }
     ]
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'notFound',
+    component: NotFound
   }
 ]
 
