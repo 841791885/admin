@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { Tabs, Button, Checkbox } from 'antd'
 import { AppleOutlined, AndroidOutlined } from '@ant-design/icons'
 
@@ -14,13 +15,16 @@ export default function LoginPanel() {
 
   const [name, setName] = useState('account')
   const loginAccountRef = useRef()
+
   const dispath = useDispatch()
+  const History = useHistory()
 
   //登录函数
   const loginAction = () => {
     if (name === 'account') {
       loginAccountRef.current.validateFields().then((formData) => {
-        dispath(accountLogin({ ...formData }))
+        console.log('123123', formData)
+        dispath(accountLogin(formData, History))
         console.log(formData)
       })
     } else {

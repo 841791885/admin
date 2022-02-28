@@ -15,11 +15,7 @@ const LoginAccount = (props) => {
         initialValues={{ remember: true }}
         autoComplete="off"
       >
-        <Form.Item
-          label="用户名"
-          name="username"
-          rules={[{ required: true, message: '请输入用户名' }]}
-        >
+        <Form.Item label="用户名" name="name" rules={[{ required: true, message: '请输入用户名' }]}>
           <Input />
         </Form.Item>
 
