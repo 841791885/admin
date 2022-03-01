@@ -6,14 +6,25 @@ export const MainWrapper = styled.div`
   .ant-layout {
     height: 100%;
     /* background-color: #ccc; */
+    background-color: #f0f2f5;
     &-header {
-      background-color: deeppink;
+      background-color: #fff;
+      height: 48px;
     }
     &-sider {
       background-color: pink;
     }
     &-content {
-      background-color: #bfa;
+      height: calc(100% - 48px);
+      background-color: #f0f2f5;
+      text-align: center;
+      color: #333;
+      .content {
+        background-color: #fff;
+        border-radius: 8px;
+        height: 100%;
+        width: 100%;
+      }
     }
   }
 `
