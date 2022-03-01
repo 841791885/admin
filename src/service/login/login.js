@@ -1,6 +1,5 @@
 import requestIns from '../index'
 
-console.log(requestIns)
 const mapLoginAPI = {
   AccountLogin: '/login',
   UserInfo: '/users/',
@@ -11,5 +10,17 @@ export function accountLoginRequest(account) {
   return requestIns.post({
     url: mapLoginAPI.AccountLogin,
     data: account
+  })
+}
+
+export function getUserById(id) {
+  return requestIns.get({
+    url: mapLoginAPI.UserInfo + id
+  })
+}
+
+export function getUserMenus(id) {
+  return requestIns.get({
+    url: mapLoginAPI.UserMenus + id + '/menu'
   })
 }
