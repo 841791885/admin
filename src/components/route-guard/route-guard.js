@@ -18,7 +18,11 @@ const RouteGuard = memo((props) => {
     console.log('locationInfo', locationInfo)
   }, [locationInfo])
 
-  return <Spin spinning={loading}>{props.children}</Spin>
+  return (
+    <Spin spinning={loading} size="large" delay={100}>
+      {props.children}
+    </Spin>
+  )
 })
 
 export default RouteGuard

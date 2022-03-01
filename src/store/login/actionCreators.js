@@ -3,15 +3,15 @@ import localCache from '@/utils/cache'
 import * as actionTypes from './constants'
 import { accountLoginRequest, getUserById, getUserMenus } from '@/service/login/login'
 
-const changeLoginTokenAction = (token) => ({
+export const changeLoginTokenAction = (token) => ({
   type: actionTypes.CHANGE_TOKEN,
   token
 })
-const changeUserInfoAction = (userInfo) => ({
+export const changeUserInfoAction = (userInfo) => ({
   type: actionTypes.CHANGE_USER_INFO,
   userInfo
 })
-const changeUserMenusAction = (userMenus) => ({
+export const changeUserMenusAction = (userMenus) => ({
   type: actionTypes.CHANGE_USER_MENUS,
   userMenus
 })
