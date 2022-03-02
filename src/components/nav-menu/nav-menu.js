@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { Menu } from 'antd'
 import { MailOutlined } from '@ant-design/icons'
 import { NavMenuWrapper, LogoImg } from './style'
+import { useHistory } from 'react-router-dom'
 
 const { SubMenu } = Menu
 
@@ -11,9 +12,13 @@ const NavMenu = memo(({ isCollapsed }) => {
     menus: state.login.userMenus
   }))
 
+  const History = useHistory()
+
   //点击菜单
-  const handleClick = (e) => {
-    console.log('click ', e)
+  const jumpRoute = (item, event) => {
+    console.log('click ', item)
+    console.log(event)
+    History.push({ pathname: item && item.url })
   }
   //映射菜单
   const mapMenus = (itemX) => {
@@ -21,7 +26,12 @@ const NavMenu = memo(({ isCollapsed }) => {
       return (
         <SubMenu key={itemX.id} title={itemX.name} icon={<MailOutlined />}>
           {itemX.children.map((itemY) => (
-            <Menu.Item key={itemY.id} onClick={handleClick}>
+            <Menu.Item
+              key={itemY.id}
+              onClick={(event) => {
+                jumpRoute(itemY, event)
+              }}
+            >
               {itemY.name}
             </Menu.Item>
           ))}
@@ -29,7 +39,12 @@ const NavMenu = memo(({ isCollapsed }) => {
       )
     } else {
       return (
-        <Menu.Item key={itemX.id} onClick={handleClick}>
+        <Menu.Item
+          key={itemX.id}
+          onClick={(event) => {
+            jumpRoute(itemX, event)
+          }}
+        >
           {itemX.name}
         </Menu.Item>
       )

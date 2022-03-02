@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 
 const User = memo(() => {
-  return <div>system</div>
+  return <div>User</div>
 })
 
 export default User
