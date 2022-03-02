@@ -11,9 +11,6 @@ const NavMenu = memo(({ isCollapsed }) => {
     menus: state.login.userMenus
   }))
 
-  //缩菜单栏
-  console.log(menus, '---')
-
   //点击菜单
   const handleClick = (e) => {
     console.log('click ', e)
