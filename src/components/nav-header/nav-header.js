@@ -1,8 +1,20 @@
-import React, { memo } from 'react'
+import React from 'react'
+import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
 
 import { NavHeaderWrapper } from './style'
-const NavHeader = memo(() => {
-  return <NavHeaderWrapper>NavHeader</NavHeaderWrapper>
-})
 
-export default NavHeader
+export default function NavHeader({ isCollapsed, toggleCollapsed }) {
+  return (
+    <NavHeaderWrapper>
+      <ToggleIcon toggleCollapsed={toggleCollapsed} isCollapsed={isCollapsed} />
+    </NavHeaderWrapper>
+  )
+}
+
+function ToggleIcon({ isCollapsed, toggleCollapsed }) {
+  return isCollapsed ? (
+    <MenuUnfoldOutlined onClick={toggleCollapsed} />
+  ) : (
+    <MenuFoldOutlined onClick={toggleCollapsed} />
+  )
+}
