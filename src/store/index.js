@@ -6,6 +6,7 @@ import localCache from '@/utils/cache'
 
 import {
   changeLoginTokenAction,
+  changeRouterAction,
   changeUserInfoAction,
   changeUserMenusAction
 } from './login/actionCreators'
@@ -26,6 +27,7 @@ export const setupStore = () => {
   const userMenus = localCache.getCache('userMenus')
   if (userMenus) {
     store.dispatch(changeUserMenusAction(userMenus))
+    store.dispatch(changeRouterAction(userMenus))
   }
 }
 

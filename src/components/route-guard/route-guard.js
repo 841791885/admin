@@ -14,11 +14,8 @@ const RouteGuard = memo((props) => {
   })
   console.log(loading)
   const History = useHistory()
-  console.log(History)
   const locationInfo = useLocation()
-  useDeepCompareEffect(() => {
-    console.log('History', History)
-  }, [locationInfo])
+  useDeepCompareEffect(() => {}, [locationInfo])
   if (locationInfo.pathname !== '/login') {
     const token = localCache.getCache('token')
     if (!token) {

@@ -61,7 +61,6 @@ const NavMenu = memo(({ isCollapsed }) => {
         mode="inline"
         // defaultOpenKeys={['sub1']}
         // defaultSelectedKeys={['1']}
-        style={{ width: 200 }}
       >
         {menus.map(mapMenus)}
       </Menu>
