@@ -25,3 +25,19 @@ export function menuMapToRoutes(userMenus) {
   _recurseGetRoute(userMenus)
   return routes
 }
+
+// /main/system/role  -> type === 2 对应menu
+export function pathMapToMenu(userMenus, currentPath, breadcrumbs = []) {
+  for (const menu of userMenus) {
+    if (menu.type === 1) {
+      const findMenu = pathMapToMenu(menu.children ?? [], currentPath)
+      if (findMenu) {
+        // breadcrumbs?.push({ name: menu.name, path: '/' })
+        // breadcrumbs?.push({ name: findMenu.name, path: '/' })
+        return findMenu
+      }
+    } else if (menu.type === 2 && menu.url === currentPath) {
+      return menu
+    }
+  }
+}

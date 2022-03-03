@@ -1,9 +1,13 @@
 import React, { memo } from 'react'
 import { useSelector } from 'react-redux'
+import { useHistory, useLocation } from 'react-router-dom'
 import { Menu } from 'antd'
+
 import { MailOutlined } from '@ant-design/icons'
+
+// import { pathMapToMenu } from '@/utils/map-menus'
+
 import { NavMenuWrapper, LogoImg } from './style'
-import { useHistory } from 'react-router-dom'
 
 const { SubMenu } = Menu
 
@@ -12,12 +16,17 @@ const NavMenu = memo(({ isCollapsed }) => {
     menus: state.login.userMenus
   }))
 
+  const Location = useLocation()
   const History = useHistory()
+  console.log('Location', Location)
+
+  console.log(Location, '-------------Location')
+  //获取当前默认对象
+  // const menu = pathMapToMenu(menus, Location.pathname)
 
   //点击菜单
-  const jumpRoute = (item, event) => {
+  const jumpRoute = (item) => {
     console.log('click ', item)
-    console.log(event)
     History.push({ pathname: item && item.url })
   }
   //映射菜单
@@ -28,8 +37,8 @@ const NavMenu = memo(({ isCollapsed }) => {
           {itemX.children.map((itemY) => (
             <Menu.Item
               key={itemY.id}
-              onClick={(event) => {
-                jumpRoute(itemY, event)
+              onClick={() => {
+                jumpRoute(itemY)
               }}
             >
               {itemY.name}
@@ -42,7 +51,7 @@ const NavMenu = memo(({ isCollapsed }) => {
         <Menu.Item
           key={itemX.id}
           onClick={(event) => {
-            jumpRoute(itemX, event)
+            jumpRoute(itemX)
           }}
         >
           {itemX.name}
@@ -50,18 +59,14 @@ const NavMenu = memo(({ isCollapsed }) => {
       )
     }
   }
+
   return (
     <NavMenuWrapper>
       <LogoImg>
         <img className="img" src={require('@/assets/img/logo.svg').default} alt="logo" />
         {isCollapsed ? null : <span className="title">起飞了芜湖~~~</span>}
       </LogoImg>
-      <Menu
-        theme="dark"
-        mode="inline"
-        // defaultOpenKeys={['sub1']}
-        // defaultSelectedKeys={['1']}
-      >
+      <Menu theme="dark" mode="inline">
         {menus.map(mapMenus)}
       </Menu>
     </NavMenuWrapper>

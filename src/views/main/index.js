@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect } from 'react'
 import { renderRoutes } from 'react-router-config'
 import { useBoolean } from 'ahooks'
 import { Layout } from 'antd'
@@ -12,6 +12,9 @@ const Main = memo((props) => {
   const {
     route: { children }
   } = props
+  useEffect(() => {
+    console.log('我重新渲染了')
+  })
 
   const [isCollapsed, { toggle: toggleCollapsed }] = useBoolean(false)
 
@@ -26,7 +29,9 @@ const Main = memo((props) => {
             <NavHeader toggleCollapsed={toggleCollapsed} isCollapsed={isCollapsed} />
           </Header>
           <Content>
-            <div className="content">{renderRoutes(children)}</div>
+            <div className="content" key={children.path}>
+              {renderRoutes(children)}
+            </div>
           </Content>
         </Layout>
       </Layout>
