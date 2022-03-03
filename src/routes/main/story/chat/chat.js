@@ -5,5 +5,3 @@ export default {
   component: React.lazy((_) => import('@/views/main/story/chat')),
   children: []
 }
-
-import React from 'react'

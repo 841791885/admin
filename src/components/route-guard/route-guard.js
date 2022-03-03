@@ -1,8 +1,10 @@
 import { memo } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
-import { Spin } from 'antd'
-import { useDeepCompareEffect } from 'ahooks'
 import { useSelector } from 'react-redux'
+import { useDeepCompareEffect } from 'ahooks'
+import { Spin } from 'antd'
+import localCache from '@/utils/cache'
+
 const RouteGuard = memo((props) => {
   const { loading } = useSelector((state) => {
     return {
@@ -11,13 +13,23 @@ const RouteGuard = memo((props) => {
     // loading: state.common.looading
   })
   console.log(loading)
-  const historyInfo = useHistory()
-  console.log(historyInfo)
+  const History = useHistory()
+  console.log(History)
   const locationInfo = useLocation()
   useDeepCompareEffect(() => {
-    console.log('locationInfo', locationInfo)
+    console.log('History', History)
   }, [locationInfo])
-
+  if (locationInfo.pathname !== '/login') {
+    const token = localCache.getCache('token')
+    if (!token) {
+      console.log('login')
+      History.push({ pathname: '/login' })
+    }
+    if (locationInfo.pathname === '/main') {
+      console.log('user')
+      History.push({ pathname: '/main/system/user' })
+    }
+  }
   return (
     <Spin spinning={loading} size="large" delay={100}>
       {props.children}

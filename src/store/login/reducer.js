@@ -1,4 +1,6 @@
 import * as actionTypes from './constants'
+import router from '@/routes'
+import { menuMapToRoutes } from '@/utils/map-menus'
 
 const initialState = {
   token: '',
@@ -17,6 +19,11 @@ function reducer(state = initialState, action) {
         userInfo: action.userInfo
       }
     case actionTypes.CHANGE_USER_MENUS:
+      const routes = menuMapToRoutes(action.userMenus)
+      router.children = []
+      routes.forEach((route) => {
+        router.children.push(route)
+      })
       return {
         ...state,
         userMenus: action.userMenus

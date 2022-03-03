@@ -5,5 +5,3 @@ export default {
   component: React.lazy((_) => import('@/views/main/product/category')),
   children: []
 }
-
-import React from 'react'

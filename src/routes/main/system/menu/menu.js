@@ -5,5 +5,3 @@ export default {
   component: React.lazy((_) => import('@/views/main/system/menu')),
   children: []
 }
-
-import React from 'react'

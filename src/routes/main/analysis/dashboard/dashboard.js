@@ -6,5 +6,3 @@ export default {
   component: React.lazy((_) => import('@/views/main/analysis/dashboard')),
   children: []
 }
-
-import React from 'react'

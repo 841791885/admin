@@ -6,5 +6,3 @@ export default {
   component: React.lazy((_) => import('@/views/main')),
   children: []
 }
-
-import React from 'react'
