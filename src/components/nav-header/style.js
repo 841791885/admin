@@ -11,5 +11,6 @@ export const HeaderContent = styled.div`
   margin-left: 20px;
   flex: 1;
   display: flex;
+  align-items: center;
   justify-content: space-between;
 `

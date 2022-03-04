@@ -3,8 +3,9 @@ import { Redirect, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useDeepCompareEffect } from 'ahooks'
 import { Spin } from 'antd'
-import localCache from '@/utils/cache'
 
+import localCache from '@/utils/cache'
+import { firstRoute } from '@/utils/map-menus'
 const RouteGuard = memo((props) => {
   const { loading } = useSelector((state) => {
     return {
@@ -22,10 +23,11 @@ const RouteGuard = memo((props) => {
       // History.push({ pathname: '/login' })
       return <Redirect to="/login" />
     }
+    console.log('firstRoute', firstRoute)
     if (locationInfo.pathname === '/main') {
       console.log('user')
       // History.push({ pathname: '/main/system/user' })
-      return <Redirect to="/main/system/user" />
+      return <Redirect to={firstRoute.path} />
     }
   }
   return (

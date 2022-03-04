@@ -1,3 +1,5 @@
+let firstRoute = undefined
+
 export function menuMapToRoutes(userMenus) {
   const routes = []
 
@@ -17,6 +19,9 @@ export function menuMapToRoutes(userMenus) {
       if (menu.type === 2) {
         const route = localRoutes.find((route) => route.path === menu.url)
         if (route) routes.push(route)
+        if (!firstRoute) {
+          firstRoute = route
+        }
       } else {
         _recurseGetRoute(menu.children ?? [])
       }
@@ -32,8 +37,8 @@ export function pathMapToMenu(userMenus, currentPath, breadcrumbs = []) {
     if (menu.type === 1) {
       const findMenu = pathMapToMenu(menu.children ?? [], currentPath)
       if (findMenu) {
-        // breadcrumbs?.push({ name: menu.name, path: '/' })
-        // breadcrumbs?.push({ name: findMenu.name, path: '/' })
+        breadcrumbs?.push({ name: menu.name, path: '/' })
+        breadcrumbs?.push({ name: findMenu.name, path: '/' })
         return findMenu
       }
     } else if (menu.type === 2 && menu.url === currentPath) {
@@ -41,3 +46,11 @@ export function pathMapToMenu(userMenus, currentPath, breadcrumbs = []) {
     }
   }
 }
+
+export function pathMapBreadcrumbs(userMenus, currentPate) {
+  const breadcrumbs = []
+  pathMapToMenu(userMenus, currentPate, breadcrumbs)
+  return breadcrumbs
+}
+
+export { firstRoute }

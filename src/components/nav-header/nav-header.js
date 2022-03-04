@@ -1,15 +1,24 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
 
-import NavInfo from './cpn/nav-info/nav-info'
-import { NavHeaderWrapper, HeaderContent } from './style'
+import { pathMapBreadcrumbs } from '@/utils/map-menus'
 
+import NavInfo from './cpn/nav-info/nav-info'
+import Breadcrumbs from '../breadcrumbs/breadcrumbs'
+
+import { NavHeaderWrapper, HeaderContent } from './style'
 export default function NavHeader({ isCollapsed, toggleCollapsed }) {
+  const Location = useLocation()
+  const { userMenus } = useSelector((state) => ({ userMenus: state.login.userMenus }))
+  const breadcrumbArr = pathMapBreadcrumbs(userMenus, Location.pathname)
+
   return (
     <NavHeaderWrapper>
       <ToggleIcon toggleCollapsed={toggleCollapsed} isCollapsed={isCollapsed} />
       <HeaderContent>
-        <div className="breadcrumb">bread</div>
+        <Breadcrumbs breadcrumbArr={breadcrumbArr} />
         <NavInfo />
       </HeaderContent>
     </NavHeaderWrapper>
