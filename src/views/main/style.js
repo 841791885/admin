@@ -2,29 +2,49 @@ import styled from 'styled-components'
 
 export const MainWrapper = styled.div`
   /* height: 100%; */
-  height: 100vh;
-  .ant-layout {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  .main-content,
+  .page {
     height: 100%;
-    /* background-color: #ccc; */
+  }
+
+  .page-content {
+    height: calc(100% - 48px);
+    text-align: center;
+    color: #333;
     background-color: #f0f2f5;
-    &-header {
-      background-color: #fff;
-      height: 48px;
+    .content {
+      height: 100%;
+      width: 100%;
+      border-radius: 8px;
+      overflow-y: auto;
     }
-    &-sider {
-      background-color: pink;
-    }
-    &-content {
-      height: calc(100% - 48px);
-      background-color: #f0f2f5;
-      text-align: center;
-      color: #333;
-      .content {
-        background-color: #fff;
-        border-radius: 8px;
-        height: 100%;
-        width: 100%;
-      }
+  }
+  .ant-layout-header {
+    background-color: #fff;
+    height: 48px;
+    color: #333;
+    text-align: center;
+    align-items: center;
+  }
+  .ant-layout-sider {
+    overflow-x: hidden;
+    overflow-y: auto;
+    line-height: 200px;
+    text-align: left;
+    cursor: pointer;
+    background-color: #001529;
+    transition: width 0.3s linear;
+    scrollbar-width: none; /* firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+
+    &::-webkit-scrollbar {
+      display: none;
     }
   }
 `

@@ -12,23 +12,20 @@ const Main = memo((props) => {
   const {
     route: { children }
   } = props
-  useEffect(() => {
-    console.log('我重新渲染了')
-  })
 
   const [isCollapsed, { toggle: toggleCollapsed }] = useBoolean(false)
 
   return (
     <MainWrapper>
-      <Layout>
+      <Layout className="main-content">
         <Sider collapsed={isCollapsed}>
           <NavMenu isCollapsed={isCollapsed} />
         </Sider>
-        <Layout>
+        <Layout className="page">
           <Header>
             <NavHeader toggleCollapsed={toggleCollapsed} isCollapsed={isCollapsed} />
           </Header>
-          <Content>
+          <Content className="page-content">
             <div className="content" key={children.path}>
               <Suspense fallback={<div>loading</div>}>{renderRoutes(children)}</Suspense>
             </div>

@@ -18,18 +18,13 @@ const NavMenu = memo(({ isCollapsed }) => {
 
   const Location = useLocation()
   const History = useHistory()
-  console.log('Location', Location)
 
   //获取当前默认对象
   const menu = pathMapToMenu(menus, Location.pathname)
-  console.log(menu.id, 'menuid')
-  console.log('menu', menu)
   //点击菜单
   const [initOpenKey, _] = useState([menu.parentId + ''])
   const [initSelectKey, setSelectKey] = useState([menu.id + ''])
 
-  console.log('initOpenKey', initOpenKey)
-  console.log('initSelectKey', initSelectKey)
   const jumpRoute = (item) => {
     console.log('click ', item)
     setSelectKey([item.id + ''])

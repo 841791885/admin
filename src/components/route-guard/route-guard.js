@@ -11,22 +11,16 @@ const RouteGuard = memo((props) => {
     return {
       loading: state.common.loading
     }
-    // loading: state.common.looading
   })
-  console.log(loading)
   const locationInfo = useLocation()
   useDeepCompareEffect(() => {}, [locationInfo])
   if (locationInfo.pathname !== '/login') {
     const token = localCache.getCache('token')
     if (!token) {
-      console.log('login')
-      // History.push({ pathname: '/login' })
       return <Redirect to="/login" />
     }
-    console.log('firstRoute', firstRoute)
     if (locationInfo.pathname === '/main') {
       console.log('user')
-      // History.push({ pathname: '/main/system/user' })
       return <Redirect to={firstRoute.path} />
     }
   }

@@ -31,7 +31,6 @@ function Menu1() {
   const History = useHistory()
   const handleExitClick = (menuInfo) => {
     if (menuInfo.key === 'loginout') {
-      console.log('logout')
       localCache.deleteCache('token')
       History.push({ pathname: '/main' })
     }

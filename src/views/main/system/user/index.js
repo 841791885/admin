@@ -1,7 +1,11 @@
 import React, { memo } from 'react'
-
+import { UserWrapper } from './style'
 const User = memo(() => {
-  return <div>User</div>
+  return (
+    <UserWrapper>
+      <div className="header">header</div>
+    </UserWrapper>
+  )
 })
 
 export default User

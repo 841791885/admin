@@ -1,7 +1,8 @@
 import React from 'react'
+const Department = React.lazy((_) => import('@/views/main/system/department'))
 export default {
   path: '/main/system/department',
   name: 'department',
-  render: React.lazy((_) => import('@/views/main/system/department')),
+  component: Department,
   children: []
 }

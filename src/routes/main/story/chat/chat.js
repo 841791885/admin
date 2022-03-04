@@ -1,7 +1,8 @@
 import React from 'react'
+const Chat = React.lazy((_) => import('@/views/main/story/chat'))
 export default {
   path: '/main/story/chat',
   name: 'chat',
-  render: React.lazy((_) => import('@/views/main/story/chat')),
+  component: Chat,
   children: []
 }

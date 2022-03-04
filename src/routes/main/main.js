@@ -1,8 +1,8 @@
 import React from 'react'
-
+const Main = React.lazy((_) => import('@/views/main'))
 export default {
   path: '/main',
   name: 'main',
-  render: React.lazy((_) => import('@/views/main')),
+  component: Main,
   children: []
 }

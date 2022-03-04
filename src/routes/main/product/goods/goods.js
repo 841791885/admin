@@ -1,7 +1,8 @@
 import React from 'react'
+const Goods = React.lazy((_) => import('@/views/main/product/goods'))
 export default {
   path: '/main/product/goods',
   name: 'goods',
-  render: React.lazy((_) => import('@/views/main/product/goods')),
+  component: Goods,
   children: []
 }
