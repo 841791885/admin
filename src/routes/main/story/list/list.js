@@ -2,6 +2,6 @@ import React from 'react'
 export default {
   path: '/main/story/list',
   name: 'list',
-  component: React.lazy((_) => import('@/views/main/story/list')),
+  render: React.lazy((_) => import('@/views/main/story/list')),
   children: []
 }
