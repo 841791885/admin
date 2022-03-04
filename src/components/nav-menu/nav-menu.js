@@ -1,11 +1,11 @@
-import React, { memo } from 'react'
+import React, { memo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import { Menu } from 'antd'
 
 import { MailOutlined } from '@ant-design/icons'
 
-// import { pathMapToMenu } from '@/utils/map-menus'
+import { pathMapToMenu } from '@/utils/map-menus'
 
 import { NavMenuWrapper, LogoImg } from './style'
 
@@ -20,13 +20,19 @@ const NavMenu = memo(({ isCollapsed }) => {
   const History = useHistory()
   console.log('Location', Location)
 
-  console.log(Location, '-------------Location')
   //获取当前默认对象
-  // const menu = pathMapToMenu(menus, Location.pathname)
-
+  const menu = pathMapToMenu(menus, Location.pathname)
+  console.log(menu.id, 'menuid')
+  console.log('menu', menu)
   //点击菜单
+  const [initOpenKey, _] = useState([menu.parentId + ''])
+  const [initSelectKey, setSelectKey] = useState([menu.id + ''])
+
+  console.log('initOpenKey', initOpenKey)
+  console.log('initSelectKey', initSelectKey)
   const jumpRoute = (item) => {
     console.log('click ', item)
+    setSelectKey([item.id + ''])
     History.push({ pathname: item && item.url })
   }
   //映射菜单
@@ -59,14 +65,18 @@ const NavMenu = memo(({ isCollapsed }) => {
       )
     }
   }
-
   return (
     <NavMenuWrapper>
       <LogoImg>
         <img className="img" src={require('@/assets/img/logo.svg').default} alt="logo" />
         {isCollapsed ? null : <span className="title">起飞了芜湖~~~</span>}
       </LogoImg>
-      <Menu theme="dark" mode="inline">
+      <Menu
+        theme="dark"
+        mode="inline"
+        defaultOpenKeys={initOpenKey}
+        defaultSelectedKeys={initSelectKey}
+      >
         {menus.map(mapMenus)}
       </Menu>
     </NavMenuWrapper>

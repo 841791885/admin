@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { Redirect, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useDeepCompareEffect } from 'ahooks'
 import { Spin } from 'antd'
@@ -13,18 +13,19 @@ const RouteGuard = memo((props) => {
     // loading: state.common.looading
   })
   console.log(loading)
-  const History = useHistory()
   const locationInfo = useLocation()
   useDeepCompareEffect(() => {}, [locationInfo])
   if (locationInfo.pathname !== '/login') {
     const token = localCache.getCache('token')
     if (!token) {
       console.log('login')
-      History.push({ pathname: '/login' })
+      // History.push({ pathname: '/login' })
+      return <Redirect to="/login" />
     }
     if (locationInfo.pathname === '/main') {
       console.log('user')
-      History.push({ pathname: '/main/system/user' })
+      // History.push({ pathname: '/main/system/user' })
+      return <Redirect to="/main/system/user" />
     }
   }
   return (

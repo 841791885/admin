@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo, useEffect, Suspense } from 'react'
 import { renderRoutes } from 'react-router-config'
 import { useBoolean } from 'ahooks'
 import { Layout } from 'antd'
@@ -30,7 +30,7 @@ const Main = memo((props) => {
           </Header>
           <Content>
             <div className="content" key={children.path}>
-              {renderRoutes(children)}
+              <Suspense fallback={<div>loading</div>}>{renderRoutes(children)}</Suspense>
             </div>
           </Content>
         </Layout>
