@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const UserWrapper = styled.div`
-  padding: 20px 20px 0;
+  padding: 20px;
 
   .from {
     background-color: #fff;
@@ -9,6 +9,17 @@ export const UserWrapper = styled.div`
     .button-group {
       text-align: right;
       padding: 0 20px 20px 0;
+    }
+  }
+
+  .table {
+    border-top: 20px solid #f5f5f5;
+    padding: 20px 0;
+    background-color: #fff;
+    .pagination {
+      text-align: right;
+      margin-top: 20px;
+      padding-right: 20px;
     }
   }
 `

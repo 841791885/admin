@@ -28,7 +28,7 @@ const Main = memo((props) => {
           </Header>
           <Content className="page-content">
             <div className="content">
-              <Suspense fallback={null}>
+              <Suspense fallback={<div>loading</div>}>
                 <RouteTransition>{renderRoutes(children)}</RouteTransition>
               </Suspense>
             </div>

@@ -1,12 +1,31 @@
 import React, { memo, useRef } from 'react'
-import { Form, Input, Button, Select, DatePicker, Row, Col } from 'antd'
-
+import { useDispatch, useSelector } from 'react-redux'
+import { useMount } from 'ahooks'
+import { Form, Input, Button, Select, DatePicker, Row, Col, Table, Space, Pagination } from 'antd'
 import { SearchOutlined, SyncOutlined } from '@ant-design/icons'
+
+import { getPageListDataAction } from '@/store/main/system/actionCreators'
 import { UserWrapper } from './style'
 
 const { RangePicker } = DatePicker
 const User = memo(() => {
   const formRef = useRef()
+  const dispatch = useDispatch()
+  useMount(() => {
+    dispatch(
+      getPageListDataAction({
+        pageName: 'users',
+        queryInfo: {
+          offset: 0,
+          size: 10
+        }
+      })
+    )
+  })
+
+  const { dataSource } = useSelector((state) => ({
+    dataSource: state.system.usersList
+  }))
   const handleQueryClick = () => {
     console.log('搜索')
     formRef.current.validateFields().then((res, err) => {
@@ -14,6 +33,93 @@ const User = memo(() => {
       console.log(err)
     })
   }
+  const columns = [
+    {
+      align: 'center',
+      title: '序号',
+      dataIndex: 'name',
+      key: 'name',
+      render: (text, record, index) => <div>{index + 1}</div>
+    },
+    {
+      align: 'center',
+      title: '真实名',
+      dataIndex: 'realname',
+      key: 'age'
+    },
+    {
+      align: 'center',
+      title: '手机号码',
+      dataIndex: 'cellphone',
+      key: 'cellphone'
+    },
+    {
+      align: 'center',
+      title: '状态',
+      key: 'enable',
+      dataIndex: 'enable',
+      render: (enable) => (enable ? <div>启用</div> : <div>禁用</div>)
+    },
+    {
+      align: 'center',
+      title: '创建时间',
+      key: 'createAt',
+      dataIndex: 'createAt',
+      render: (createAt) => <div>createAt</div>
+    },
+    {
+      align: 'center',
+      title: '更新时间',
+      key: 'updateAt',
+      dataIndex: 'updateAt',
+      render: (updateAt) => <div>updateAt</div>
+    },
+    {
+      align: 'center',
+      title: '操作',
+      key: 'handler',
+      render: (text, record) => (
+        <Space size="middle">
+          <Button>编辑</Button>
+          <Button>删除</Button>
+        </Space>
+      )
+    }
+  ]
+
+  const data = [
+    {
+      key: '1',
+      name: 'John Brown',
+      realname: 'John Brown',
+      cellphone: 1323232313,
+      createAt: '2022-11-12',
+      updateAt: '2022-11-12',
+      enable: 1,
+      address: 'New York No. 1 Lake Park'
+    },
+    {
+      key: '2',
+      name: 'Jim Green',
+      realname: 'Jim Green',
+      cellphone: 1323232313,
+      createAt: '2022-11-12',
+      updateAt: '2022-11-12',
+      enable: 0,
+      address: 'London No. 1 Lake Park'
+    },
+    {
+      key: '3',
+      name: 'Joe Black',
+      realname: 'Joe Black',
+      cellphone: 1323232313,
+      createAt: '2022-11-12',
+      updateAt: '2022-11-12',
+      enable: 1,
+      address: 'Sidney No. 1 Lake Park'
+    }
+  ]
+
   return (
     <UserWrapper>
       <div className="from">
@@ -83,6 +189,17 @@ const User = memo(() => {
               搜索
             </Button>
           </div>
+        </div>
+      </div>
+      <div className="table">
+        <Table columns={columns} dataSource={dataSource} bordered pagination={false} />
+        <div className="pagination">
+          <Pagination
+            total={85}
+            showSizeChanger
+            showQuickJumper
+            showTotal={(total) => `共 ${total} 条`}
+          />
         </div>
       </div>
     </UserWrapper>
