@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import React, { memo, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import { Menu } from 'antd'
@@ -22,7 +22,7 @@ const NavMenu = memo(({ isCollapsed }) => {
   //获取当前默认对象
   const menu = pathMapToMenu(menus, Location.pathname)
   //点击菜单
-  const [initOpenKey, _] = useState([menu.parentId + ''])
+  const initOpenKey = useRef([menu.parentId + ''])
   const [initSelectKey, setSelectKey] = useState([menu.id + ''])
 
   const jumpRoute = (item) => {
@@ -69,7 +69,7 @@ const NavMenu = memo(({ isCollapsed }) => {
       <Menu
         theme="dark"
         mode="inline"
-        defaultOpenKeys={initOpenKey}
+        defaultOpenKeys={initOpenKey.current}
         defaultSelectedKeys={initSelectKey}
       >
         {menus.map(mapMenus)}

@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 
 export const MainWrapper = styled.div`
   /* height: 100%; */
