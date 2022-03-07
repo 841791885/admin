@@ -1,12 +1,18 @@
 import styled from 'styled-components'
 
-export const WHTabbleWrapper = styled.div`
+export const WHTableWrapper = styled.div`
   border-top: 20px solid #f5f5f5;
-  padding: 20px 0;
+  padding: 20px 20px;
+
   background-color: #fff;
-  .pagination {
-    text-align: right;
-    margin-top: 20px;
-    padding-right: 20px;
-  }
+`
+export const WHTableHeaderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+`
+export const WHTabelFooterWrapper = styled.div`
+  text-align: right;
+  margin-top: 20px;
+  padding-right: 20px;
 `

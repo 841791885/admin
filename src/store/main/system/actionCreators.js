@@ -7,7 +7,7 @@ import {
   editPageData
 } from '@/service/main/system/system'
 
-const changeUsersTotalCount = (usersTotalCount) => ({
+const changeUsersTotalCountAction = (usersTotalCount) => ({
   type: actionType.CHANG_USERS_TOTAL_COUNT,
   usersTotalCount
 })
@@ -17,7 +17,7 @@ const changeUsersListAction = (usersList) => ({
   usersList
 })
 
-export const getPageListDataAction = (payload) => {
+export const getPageListData = (payload) => {
   return async (dispatch) => {
     const pageName = payload.pageName
     const pageUrl = `/${pageName}/list`
@@ -28,7 +28,7 @@ export const getPageListDataAction = (payload) => {
     console.log('totalCount', totalCount)
     switch (pageName) {
       case 'users':
-        dispatch(changeUsersTotalCount(totalCount))
+        dispatch(changeUsersTotalCountAction(totalCount))
         dispatch(changeUsersListAction(list))
         break
     }

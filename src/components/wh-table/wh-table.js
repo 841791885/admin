@@ -1,13 +1,15 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { useSetState } from 'ahooks'
-import { Button, Table, Space, Pagination, Tag } from 'antd'
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import React, { forwardRef } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useSetState, useDeepCompareEffect } from 'ahooks'
+import { Button, Table, Pagination } from 'antd'
 
-import { utcToDateTimeFormat } from '@/utils/date-formate'
+import { getPageListData } from '@/store/main/system/actionCreators'
 
-import { WHTabbleWrapper } from './style'
-export default function WHTable() {
+import { WHTableWrapper, WHTableHeaderWrapper, WHTabelFooterWrapper } from './style'
+function WHTable(props) {
+  const { renderTableItemCol, tableTitle, pageName, getPageDataRef } = props
+
+  const dispatch = useDispatch()
   const { dataSource, usersTotalCount } = useSelector((state) => ({
     dataSource: state.system.usersList,
     usersTotalCount: state.system.usersTotalCount
@@ -19,58 +21,30 @@ export default function WHTable() {
     pageSize: 10
   })
 
-  const columns = [
-    {
-      align: 'center',
-      title: '序号',
-      dataIndex: 'name',
-      render: (text, record, index) => <div>{index + 1}</div>
-    },
-    {
-      align: 'center',
-      title: '真实名',
-      dataIndex: 'realname'
-    },
-    {
-      align: 'center',
-      title: '手机号码',
-      dataIndex: 'cellphone'
-    },
-    {
-      align: 'center',
-      title: '状态',
-      dataIndex: 'enable',
-      render: (enable) => (enable ? <Tag color="#87d068">启用</Tag> : <Tag color="#f50"> 禁用</Tag>)
-    },
-    {
-      align: 'center',
-      title: '创建时间',
-      dataIndex: 'createAt',
-      render: (createAt) => <div>{utcToDateTimeFormat(createAt)}</div>
-    },
-    {
-      align: 'center',
-      title: '更新时间',
-      dataIndex: 'updateAt',
-      render: (updateAt) => <div>{utcToDateTimeFormat(updateAt)}</div>
-    },
-    {
-      align: 'center',
-      title: '操作',
-      render: (text, record) => (
-        <Space size="middle">
-          <Button type="primary" icon={<EditOutlined />}>
-            编辑
-          </Button>
-          <Button type="danger" icon={<DeleteOutlined />}>
-            删除
-          </Button>
-        </Space>
-      )
-    }
-  ]
+  useDeepCompareEffect(() => {
+    getPageDataRef?.current()
+    console.log('useDeepCompareEffect')
+  }, [pageInfo])
 
+  //请求页面数据
+  const getPageData = (otherInfo = {}) => {
+    console.log('pageInfo.currentPage', pageInfo.currentPage)
+    console.log('pageInfo.pageSize', pageInfo.pageSize)
+    dispatch(
+      getPageListData({
+        pageName,
+        queryInfo: {
+          offset: (pageInfo.currentPage - 1) * pageInfo.pageSize,
+          size: pageInfo.pageSize,
+          ...otherInfo
+        }
+      })
+    )
+  }
+  getPageDataRef.current = getPageData
+  //改变页码
   const changePage = (page, pageSize) => {
+    console.log('pageSize', pageSize)
     setPageInfo({
       currentPage: page,
       pageSize
@@ -78,24 +52,34 @@ export default function WHTable() {
   }
 
   return (
-    <WHTabbleWrapper>
+    <WHTableWrapper>
+      <WHTableHeaderWrapper>
+        <h2 className="table-title">{tableTitle}</h2>
+        <Button type="primary" size="large">
+          新建数据
+        </Button>
+      </WHTableHeaderWrapper>
       <Table
-        columns={columns}
+        columns={renderTableItemCol}
         dataSource={dataSource}
         rowKey={(record) => record.id}
         bordered
         pagination={false}
       />
-      <div className="pagination">
+      <WHTabelFooterWrapper>
         <Pagination
           total={usersTotalCount}
           pageSize={pageInfo.pageSize}
+          // defaultCurrent={1}
+          defaultCurrent={pageInfo.currentPage}
           showSizeChanger
           showQuickJumper
           showTotal={(total) => `共 ${total} 条`}
           onChange={changePage}
         />
-      </div>
-    </WHTabbleWrapper>
+      </WHTabelFooterWrapper>
+    </WHTableWrapper>
   )
 }
+
+export default forwardRef((props, ref) => <WHTable {...props} getPageDataRef={ref} />)

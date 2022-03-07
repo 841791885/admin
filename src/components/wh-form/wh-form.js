@@ -5,7 +5,6 @@ import { SearchOutlined, SyncOutlined } from '@ant-design/icons'
 import { WHFormWrapper, FromHeaderContent, FromFooterContent } from './style'
 
 export default function WHForm(props) {
-  const formRef = useRef()
   const {
     formTitle,
     formName = '',
@@ -22,36 +21,24 @@ export default function WHForm(props) {
       xs: 24
     },
     formItems,
-    Footer
+    Footer,
+    queryBtnClick,
+    resetBtnClick
   } = props
+
+  const formRef = useRef()
+
   const handleQueryClick = () => {
     console.log('搜索')
     const FormObj = formRef.current.getFieldsValue(true)
     console.log('FormObj', FormObj)
-    // dispatch(
-    //   getPageListDataAction({
-    //     pageName: 'users',
-    //     queryInfo: {
-    //       ...obj,
-    //       offset: (pageInfo.currentPage - 1) * 8,
-    //       size: pageInfo.pageSize
-    //     }
-    //   })
-    // )
+    queryBtnClick(FormObj)
   }
 
   const handleResetClick = () => {
     console.log('重置')
-    formRef.current.setFieldsValue({ cellphone: null })
-    // dispatch(
-    //   getPageListDataAction({
-    //     pageName: 'users',
-    //     queryInfo: {
-    //       offset: 0,
-    //       size: 10
-    //     }
-    //   })
-    // )
+    formRef.current.resetFields()
+    resetBtnClick()
   }
   //渲染表单选项
   const renderFormItem = (formItem) => {
@@ -81,6 +68,8 @@ export default function WHForm(props) {
             <NewDatePicker placeholder={formItem.placeholder} />
           </Form.Item>
         )
+      default:
+        return null
     }
   }
   const defaultFooter = () => (
