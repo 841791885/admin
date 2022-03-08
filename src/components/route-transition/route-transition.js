@@ -1,6 +1,6 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
-import { CSSTransition, SwitchTransition, TransitionGroup } from 'react-transition-group'
+import { CSSTransition, SwitchTransition } from 'react-transition-group'
 import styled from 'styled-components'
 export default function RouteTransition({ children }) {
   const Location = useLocation()
@@ -8,18 +8,11 @@ export default function RouteTransition({ children }) {
 
   return (
     <Globalcss>
-      <TransitionGroup>
-        <SwitchTransition>
-          <CSSTransition
-            classNames="fade"
-            timeout={300}
-            unmountOnExit={true}
-            key={Location.pathname}
-          >
-            {children}
-          </CSSTransition>
-        </SwitchTransition>
-      </TransitionGroup>
+      <SwitchTransition mode="out-in">
+        <CSSTransition classNames="fade" timeout={300} unmountOnExit={true} key={Location.pathname}>
+          {children}
+        </CSSTransition>
+      </SwitchTransition>
     </Globalcss>
   )
 }
