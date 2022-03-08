@@ -6,3 +6,5 @@ export const CHANG_DEPARTMENT_LIST = 'change_department_list'
 
 export const CHANG_ROLE_TOTAL_COUNT = 'change_role_count'
 export const CHANG_ROLE_LIST = 'change_role_list'
+
+export const CHANG_MENU_LIST = 'change_menu_list'

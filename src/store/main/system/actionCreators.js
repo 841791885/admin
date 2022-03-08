@@ -37,6 +37,11 @@ const changeRoleListAction = (roleList) => ({
   roleList
 })
 
+const changeMenuListAction = (menuList) => ({
+  type: actionType.CHANG_MENU_LIST,
+  menuList
+})
+
 export const getPageListData = (payload) => {
   return async (dispatch) => {
     const pageName = payload.pageName
@@ -58,6 +63,9 @@ export const getPageListData = (payload) => {
       case 'role':
         dispatch(changeRoleTotalCountAction(totalCount))
         dispatch(changeRoleListAction(list))
+        break
+      case 'menu':
+        dispatch(changeMenuListAction(list))
         break
     }
   }

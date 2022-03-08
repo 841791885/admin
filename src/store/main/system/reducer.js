@@ -6,7 +6,8 @@ const initialState = {
   departmentTotalCount: 0,
   departmentList: [],
   roleTotalCount: 0,
-  roleList: []
+  roleList: [],
+  menuList: []
 }
 
 export default function reducer(state = initialState, action) {
@@ -42,6 +43,12 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         roleList: action.roleList
+      }
+    }
+    case actionType.CHANG_MENU_LIST: {
+      return {
+        ...state,
+        menuList: action.menuList
       }
     }
     default:

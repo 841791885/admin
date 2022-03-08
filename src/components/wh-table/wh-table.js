@@ -70,16 +70,18 @@ function WHTable(props) {
         pagination={false}
       />
       <WHTabelFooterWrapper>
-        <Pagination
-          total={pageListTotalCount}
-          pageSize={pageInfo.pageSize}
-          // defaultCurrent={1}
-          defaultCurrent={pageInfo.currentPage}
-          showSizeChanger
-          showQuickJumper
-          showTotal={(total) => `共 ${total} 条`}
-          onChange={changePage}
-        />
+        {pageListTotalCount ? (
+          <Pagination
+            total={pageListTotalCount}
+            pageSize={pageInfo.pageSize}
+            // defaultCurrent={1}
+            defaultCurrent={pageInfo.currentPage}
+            showSizeChanger
+            showQuickJumper
+            showTotal={(total) => `共 ${total} 条`}
+            onChange={changePage}
+          />
+        ) : null}
       </WHTabelFooterWrapper>
     </WHTableWrapper>
   )
