@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useSetState, useDeepCompareEffect } from 'ahooks'
 import { Button, Table, Pagination } from 'antd'
 
@@ -7,13 +7,16 @@ import { getPageListData } from '@/store/main/system/actionCreators'
 
 import { WHTableWrapper, WHTableHeaderWrapper, WHTabelFooterWrapper } from './style'
 function WHTable(props) {
-  const { renderTableItemCol, tableTitle, pageName, getPageDataRef } = props
+  const {
+    renderTableItemCol,
+    tableTitle,
+    pageName,
+    getPageDataRef,
+    pageListData,
+    pageListTotalCount
+  } = props
 
   const dispatch = useDispatch()
-  const { dataSource, usersTotalCount } = useSelector((state) => ({
-    dataSource: state.system.usersList,
-    usersTotalCount: state.system.usersTotalCount
-  }))
 
   // 0.绑定pageInfo
   const [pageInfo, setPageInfo] = useSetState({
@@ -61,14 +64,14 @@ function WHTable(props) {
       </WHTableHeaderWrapper>
       <Table
         columns={renderTableItemCol}
-        dataSource={dataSource}
+        dataSource={pageListData}
         rowKey={(record) => record.id}
         bordered
         pagination={false}
       />
       <WHTabelFooterWrapper>
         <Pagination
-          total={usersTotalCount}
+          total={pageListTotalCount}
           pageSize={pageInfo.pageSize}
           // defaultCurrent={1}
           defaultCurrent={pageInfo.currentPage}

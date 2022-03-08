@@ -17,6 +17,16 @@ const changeUsersListAction = (usersList) => ({
   usersList
 })
 
+const changeDepartmentTotalCountAction = (departmentTotalCount) => ({
+  type: actionType.CHANG_DEPARTMENT_TOTAL_COUNT,
+  departmentTotalCount
+})
+
+const changeDepartmentListAction = (departmentList) => ({
+  type: actionType.CHANG_DEPARTMENT_LIST,
+  departmentList
+})
+
 export const getPageListData = (payload) => {
   return async (dispatch) => {
     const pageName = payload.pageName
@@ -31,6 +41,9 @@ export const getPageListData = (payload) => {
         dispatch(changeUsersTotalCountAction(totalCount))
         dispatch(changeUsersListAction(list))
         break
+      case 'department':
+        dispatch(changeDepartmentTotalCountAction(totalCount))
+        dispatch(changeDepartmentListAction(list))
     }
   }
 }

@@ -2,7 +2,9 @@ import * as actionType from './constants'
 
 const initialState = {
   usersTotalCount: 0,
-  usersList: []
+  usersList: [],
+  departmentTotalCount: 0,
+  departmentList: []
 }
 
 export default function reducer(state = initialState, action) {
@@ -16,6 +18,17 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         usersList: action.usersList
+      }
+    }
+    case actionType.CHANG_DEPARTMENT_TOTAL_COUNT:
+      return {
+        ...state,
+        departmentTotalCount: action.departmentTotalCount
+      }
+    case actionType.CHANG_DEPARTMENT_LIST: {
+      return {
+        ...state,
+        departmentList: action.departmentList
       }
     }
     default:

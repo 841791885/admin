@@ -1,10 +1,10 @@
-import { Button, Space, Tag } from 'antd'
+import { Button, Space } from 'antd'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 
 import { utcToDateTimeFormat } from '@/utils/date-formate'
 
 export const contentTableConfig = {
-  tableTitle: '用户列表',
+  tableTitle: '部门列表',
   renderTableItemCol: [
     {
       align: 'center',
@@ -14,19 +14,18 @@ export const contentTableConfig = {
     },
     {
       align: 'center',
-      title: '真实名',
-      dataIndex: 'realname'
+      title: '部门名称',
+      dataIndex: 'name'
     },
     {
       align: 'center',
-      title: '手机号码',
-      dataIndex: 'cellphone'
+      title: '部门领导',
+      dataIndex: 'leader'
     },
     {
       align: 'center',
-      title: '状态',
-      dataIndex: 'enable',
-      render: (enable) => (enable ? <Tag color="#87d068">启用</Tag> : <Tag color="#f50"> 禁用</Tag>)
+      title: '上级部门',
+      dataIndex: 'parentId'
     },
     {
       align: 'center',
