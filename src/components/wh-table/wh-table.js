@@ -1,21 +1,27 @@
 import React, { forwardRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSetState, useDeepCompareEffect } from 'ahooks'
-import { Button, Table, Pagination } from 'antd'
+import { Button, Table, Pagination, Tag, Space } from 'antd'
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 
 import { getPageListData } from '@/store/main/system/actionCreators'
+import { utcToDateTimeFormat } from '@/utils/date-formate'
 
 import { WHTableWrapper, WHTableHeaderWrapper, WHTabelFooterWrapper } from './style'
+
+const { Column } = Table
 function WHTable(props) {
   const {
-    renderTableItemCol,
+    tableItemCol,
     tableTitle,
     pageName,
     getPageDataRef,
     pageListData,
-    pageListTotalCount
+    pageListTotalCount,
+    toggleModalVisible
   } = props
 
+  console.log('pageListData', pageListData)
   const dispatch = useDispatch()
 
   // 0.绑定pageInfo
@@ -44,6 +50,7 @@ function WHTable(props) {
       })
     )
   }
+
   getPageDataRef.current = getPageData
   //改变页码
   const changePage = (page, pageSize) => {
@@ -54,21 +61,91 @@ function WHTable(props) {
     })
   }
 
+  const createClick = () => {
+    console.log('添加')
+    toggleModalVisible()
+  }
+  const editClick = () => {
+    console.log('编辑')
+    toggleModalVisible()
+  }
+  const deleteClick = () => {
+    console.log('删除')
+    toggleModalVisible()
+  }
+
+  const rendertableItemCol = (tableItemCol) => {
+    switch (tableItemCol.type) {
+      case 'text':
+        return (
+          <Column
+            align="center"
+            title={tableItemCol.title}
+            dataIndex={tableItemCol.dataIndex}
+            key={tableItemCol.title}
+          />
+        )
+      case 'tag':
+        return (
+          <Column
+            align="center"
+            title={tableItemCol.title}
+            key={tableItemCol.title}
+            render={(record) => <Tag>{record[tableItemCol.dataIndex] ? '启用' : '禁用'}</Tag>}
+          />
+        )
+      case 'time':
+        return (
+          <Column
+            align="center"
+            title={tableItemCol.title}
+            key={tableItemCol.title}
+            render={(record) => <div>{utcToDateTimeFormat(record[tableItemCol.dataIndex])}</div>}
+          />
+        )
+      case 'action':
+        return (
+          <Column
+            align="center"
+            title={tableItemCol.title}
+            key={tableItemCol.title}
+            render={(record) => (
+              <Space size="middle">
+                <Button type="primary" icon={<EditOutlined />} onClick={editClick}>
+                  编辑
+                </Button>
+                <Button type="danger" icon={<DeleteOutlined />} onClick={deleteClick}>
+                  删除
+                </Button>
+              </Space>
+            )}
+          />
+        )
+      default:
+        return
+    }
+  }
+
   return (
     <WHTableWrapper>
       <WHTableHeaderWrapper>
         <h2 className="table-title">{tableTitle}</h2>
-        <Button type="primary" size="large">
+        <Button type="primary" size="large" onClick={createClick}>
           新建数据
         </Button>
       </WHTableHeaderWrapper>
       <Table
-        columns={renderTableItemCol}
+        // columns={renderTableItemCol}
         dataSource={pageListData}
         rowKey={(record) => record.id}
         bordered
         pagination={false}
-      />
+      >
+        {/* {tableItemCol.map((item) => (
+          <Column align="center" title={item.title} dataIndex={item.dataIndex} key={item.title} />
+        ))} */}
+        {tableItemCol.map(rendertableItemCol)}
+      </Table>
       <WHTabelFooterWrapper>
         {pageListTotalCount ? (
           <Pagination

@@ -10,9 +10,10 @@ import { MenuWrapper } from './style'
 const Menu = memo(() => {
   const [getPageDataRef] = usePageSearch()
   const { pageListData } = useSelector((state) => ({
-    pageListData: state.system.roleList
+    pageListData: state.system.menuList
   }))
 
+  console.log('menulist', pageListData)
   return (
     <MenuWrapper>
       <WHTable

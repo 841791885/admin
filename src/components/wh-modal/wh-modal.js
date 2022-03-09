@@ -1,27 +1,28 @@
-import React from 'react'
-import { useBoolean } from 'ahooks'
+import React, { forwardRef } from 'react'
 import { Modal } from 'antd'
 
 import { WHModalWrapper } from './style'
-export default function WHModal() {
-  const [isModalVisible, { toggle: toggleModalVisible }] = useBoolean(false)
+function WHModal(props) {
+  const { pageModalRef, modalVisible, toggleModalVisible } = props
   return (
     <WHModalWrapper>
       <Modal
         title="Basic Modal"
         width="40%"
         destroyOnClose
-        visible={isModalVisible}
+        visible={modalVisible}
         onOk={toggleModalVisible}
         onCancel={toggleModalVisible}
         afterClose={() => {
           console.log('关闭了')
         }}
       >
-        <p>Some contents...</p>
+        <p ref={pageModalRef}>Some contents...</p>
         <p>Some contents...</p>
         <p>Some contents...</p>
       </Modal>
     </WHModalWrapper>
   )
 }
+
+export default forwardRef((props, ref) => <WHModal {...props} pageModalRef={ref} />)
