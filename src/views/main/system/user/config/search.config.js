@@ -45,5 +45,6 @@ export const searchFormConfig = {
   ],
   formTitle: '高级搜索',
   formName: 'users',
-  formSize: 'large'
+  formSize: 'large',
+  isShowFooter: true
 }

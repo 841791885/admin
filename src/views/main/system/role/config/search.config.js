@@ -27,5 +27,6 @@ export const searchFormConfig = {
   ],
   formTitle: '高级搜索',
   formName: 'role',
-  formSize: 'large'
+  formSize: 'large',
+  isShowFooter: true
 }

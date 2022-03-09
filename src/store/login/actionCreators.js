@@ -4,6 +4,7 @@ import router from '@/routes'
 
 import * as actionTypes from './constants'
 import { accountLoginRequest, getUserById, getUserMenus } from '@/service/login/login'
+import { getInitalData } from '@/store/common/actionCreators'
 
 export const changeLoginTokenAction = (token) => ({
   type: actionTypes.CHANGE_TOKEN,
@@ -49,6 +50,9 @@ export const accountLogin = (loginInfo, History) => {
     localCache.setCache('userMenus', userMenus)
 
     dispatch(changeRouterAction(userMenus))
+
+    dispatch(getInitalData())
+
     History.push({ pathname: '/main' })
     //想在这里写一个history.push()  然后不能用usehistory()
     //是使用react - router - config库的路由  老师请问一下有什么方法也可以拿到这个history对象吗

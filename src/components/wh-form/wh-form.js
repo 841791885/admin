@@ -1,10 +1,10 @@
-import React, { useRef } from 'react'
+import React, { forwardRef } from 'react'
 import { Form, Input, Select, Row, Col, DatePicker, Button, Space } from 'antd'
 import { SearchOutlined, SyncOutlined } from '@ant-design/icons'
 
 import { WHFormWrapper, FromHeaderContent, FromFooterContent } from './style'
 
-export default function WHForm(props) {
+function WHForm(props) {
   const {
     formTitle,
     formName = '',
@@ -21,23 +21,22 @@ export default function WHForm(props) {
       xs: 24
     },
     formItems,
-    Footer,
+    isShowFooter,
     queryBtnClick,
-    resetBtnClick
+    resetBtnClick,
+    getFormDataRef
   } = props
-
-  const formRef = useRef()
 
   const handleQueryClick = () => {
     console.log('搜索')
-    const FormObj = formRef.current.getFieldsValue(true)
+    const FormObj = getFormDataRef.current.getFieldsValue(true)
     console.log('FormObj', FormObj)
     queryBtnClick(FormObj)
   }
 
   const handleResetClick = () => {
     console.log('重置')
-    formRef.current.resetFields()
+    getFormDataRef.current.resetFields()
     resetBtnClick()
   }
   //渲染表单选项
@@ -86,7 +85,7 @@ export default function WHForm(props) {
     <WHFormWrapper>
       <FromHeaderContent>{formTitle ? formTitle : null}</FromHeaderContent>
       <Form
-        ref={formRef}
+        ref={getFormDataRef}
         name={formName}
         size={formSize}
         labelCol={labelCol}
@@ -101,8 +100,10 @@ export default function WHForm(props) {
         </Row>
       </Form>
       <FromFooterContent>
-        <Space size="middle">{Footer ? <Footer /> : defaultFooter()}</Space>
+        <Space size="middle">{isShowFooter ? defaultFooter() : null}</Space>
       </FromFooterContent>
     </WHFormWrapper>
   )
 }
+
+export default forwardRef((props, ref) => <WHForm getFormDataRef={ref} {...props} />)

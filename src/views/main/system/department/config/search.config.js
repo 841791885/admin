@@ -28,5 +28,6 @@ export const searchFormConfig = {
   ],
   // formTitle: '高级搜索',
   formName: 'department',
-  formSize: 'large'
+  formSize: 'large',
+  isShowFooter: true
 }

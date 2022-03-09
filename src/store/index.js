@@ -10,6 +10,8 @@ import {
   changeUserInfoAction,
   changeUserMenusAction
 } from './login/actionCreators'
+// import { getInitalData } from '@/store/common/actionCreators'
+import { getInitalData } from './common/actionCreators'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
@@ -19,6 +21,7 @@ export const setupStore = () => {
   const token = localCache.getCache('token')
   if (token) {
     store.dispatch(changeLoginTokenAction(token))
+    store.dispatch(getInitalData())
   }
   const userInfo = localCache.getCache('userInfo')
   if (userInfo) {

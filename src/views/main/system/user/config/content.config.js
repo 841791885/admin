@@ -8,8 +8,7 @@ export const contentTableConfig = {
   tableItemCol: [
     {
       title: '序号',
-      dataIndex: 'name',
-      type: 'text'
+      type: 'index'
     },
     {
       title: '真实名',

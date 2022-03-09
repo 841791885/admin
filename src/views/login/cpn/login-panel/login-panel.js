@@ -8,6 +8,7 @@ import LoginAccount from '../login-account/login-account'
 import LoginPhone from '../login-phone/login-phone'
 
 import { accountLogin } from '@/store/login/actionCreators'
+
 import { LoginPanelWrapper } from './style'
 
 const { TabPane } = Tabs

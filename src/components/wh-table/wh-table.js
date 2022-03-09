@@ -18,7 +18,9 @@ function WHTable(props) {
     getPageDataRef,
     pageListData,
     pageListTotalCount,
-    toggleModalVisible
+    toggleModalVisible,
+    syncFormData,
+    changeFormDataSubmitMode
   } = props
 
   console.log('pageListData', pageListData)
@@ -63,19 +65,33 @@ function WHTable(props) {
 
   const createClick = () => {
     console.log('添加')
+    changeFormDataSubmitMode('add')
     toggleModalVisible()
   }
-  const editClick = () => {
+  const editClick = (rowItem) => {
+    console.log(rowItem)
     console.log('编辑')
     toggleModalVisible()
+    syncFormData(rowItem)
+    changeFormDataSubmitMode('edit')
   }
-  const deleteClick = () => {
+  const deleteClick = (rowItem) => {
+    console.log(rowItem)
     console.log('删除')
     toggleModalVisible()
   }
 
   const rendertableItemCol = (tableItemCol) => {
     switch (tableItemCol.type) {
+      case 'index':
+        return (
+          <Column
+            align="center"
+            title={tableItemCol.title}
+            key={tableItemCol.title}
+            render={(record, record2, num) => <div>{num + 1}</div>}
+          />
+        )
       case 'text':
         return (
           <Column
@@ -91,7 +107,11 @@ function WHTable(props) {
             align="center"
             title={tableItemCol.title}
             key={tableItemCol.title}
-            render={(record) => <Tag>{record[tableItemCol.dataIndex] ? '启用' : '禁用'}</Tag>}
+            render={(record) => (
+              <Tag color={record[tableItemCol.dataIndex] ? '#2db7f5' : '#f50'}>
+                {record[tableItemCol.dataIndex] ? '启用' : '禁用'}
+              </Tag>
+            )}
           />
         )
       case 'time':
@@ -111,10 +131,22 @@ function WHTable(props) {
             key={tableItemCol.title}
             render={(record) => (
               <Space size="middle">
-                <Button type="primary" icon={<EditOutlined />} onClick={editClick}>
+                <Button
+                  type="primary"
+                  icon={<EditOutlined />}
+                  onClick={() => {
+                    editClick(record)
+                  }}
+                >
                   编辑
                 </Button>
-                <Button type="danger" icon={<DeleteOutlined />} onClick={deleteClick}>
+                <Button
+                  type="danger"
+                  icon={<DeleteOutlined />}
+                  onClick={() => {
+                    deleteClick(record)
+                  }}
+                >
                   删除
                 </Button>
               </Space>
