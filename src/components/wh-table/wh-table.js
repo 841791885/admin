@@ -21,7 +21,6 @@ function WHTable(props) {
     changeFormDataSubmitMode
   } = props
 
-  console.log('pageListData', pageListData)
   const dispatch = useDispatch()
 
   // 0.绑定pageInfo
@@ -32,7 +31,6 @@ function WHTable(props) {
 
   useDeepCompareEffect(() => {
     getPageDataRef?.current()
-    console.log('useDeepCompareEffect')
   }, [pageInfo])
 
   //请求页面数据
@@ -160,16 +158,7 @@ function WHTable(props) {
           新建数据
         </Button>
       </WHTableHeaderWrapper>
-      <Table
-        // columns={renderTableItemCol}
-        dataSource={pageListData}
-        rowKey={(record) => record.id}
-        bordered
-        pagination={false}
-      >
-        {/* {tableItemCol.map((item) => (
-          <Column align="center" title={item.title} dataIndex={item.dataIndex} key={item.title} />
-        ))} */}
+      <Table dataSource={pageListData} rowKey={(record) => record.id} bordered pagination={false}>
         {tableItemCol.map(rendertableItemCol)}
       </Table>
       <WHTabelFooterWrapper>
@@ -177,7 +166,6 @@ function WHTable(props) {
           <Pagination
             total={pageListTotalCount}
             pageSize={pageInfo.pageSize}
-            // defaultCurrent={1}
             defaultCurrent={pageInfo.currentPage}
             showSizeChanger
             showQuickJumper

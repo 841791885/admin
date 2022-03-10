@@ -12,7 +12,7 @@ function WHModal(props) {
     entireDepartments: state.common.entireDepartments
   }))
 
-  //修改渲染的表单 给select增加option
+  //修改渲染的表单 给select增加部门和用户增加option
   const formItemRef = useMemo(() => {
     const newformItems = [...formItems]
     const roleOption = formItems?.find((item) => item.field === 'roleId')
