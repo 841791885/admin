@@ -18,8 +18,6 @@ function WHTable(props) {
     getPageDataRef,
     pageListData,
     pageListTotalCount,
-    toggleModalVisible,
-    syncFormData,
     changeFormDataSubmitMode
   } = props
 
@@ -66,19 +64,15 @@ function WHTable(props) {
   const createClick = () => {
     console.log('添加')
     changeFormDataSubmitMode('add')
-    toggleModalVisible()
   }
   const editClick = (rowItem) => {
     console.log(rowItem)
     console.log('编辑')
-    toggleModalVisible()
-    syncFormData(rowItem)
-    changeFormDataSubmitMode('edit')
+    changeFormDataSubmitMode('edit', rowItem)
   }
   const deleteClick = (rowItem) => {
     console.log(rowItem)
     console.log('删除')
-    toggleModalVisible()
   }
 
   const rendertableItemCol = (tableItemCol) => {

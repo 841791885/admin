@@ -11,5 +11,5 @@ export const usePageSearch = () => {
     getPageDataRef?.current()
   }
 
-  return [getSearchFormDataRef, getPageDataRef, handleQueryClick, handleResetClick]
+  return { getSearchFormDataRef, getPageDataRef, handleQueryClick, handleResetClick }
 }

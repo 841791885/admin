@@ -6,54 +6,15 @@ import WHForm from '@/components/wh-form/wh-form'
 import { WHModalWrapper } from './style'
 import { useSelector } from 'react-redux'
 function WHModal(props) {
-  const { modalVisible, toggleModalVisible, handleFormClick, pageModalRef } = props
+  const { isModalVisible, pageModalRef, formDataSubmitMode, closeModal, formItems, ...rest } = props
   const { entireRoles, entireDepartments } = useSelector((state) => ({
     entireRoles: state.common.entireRoles,
     entireDepartments: state.common.entireDepartments
   }))
-  const formItems = [
-    {
-      field: 'name',
-      type: 'input',
-      label: '用户名',
-      placeHolder: '请输入用户名',
-      rules: [
-        {
-          required: true
-        }
-      ]
-    },
-    {
-      field: 'realname',
-      type: 'input',
-      label: '真实姓名',
-      placeHolder: '请输入真实姓名',
-      rules: [{ required: true }]
-    },
-    {
-      field: 'password',
-      type: 'password',
-      label: '密码',
-      placeHolder: '请输入密码'
-      // isHidden: false
-    },
-    { field: 'cellphone', type: 'input', label: '电话号码', placeHolder: '请输入电话号码' },
-    {
-      field: 'roleId',
-      type: 'select',
-      label: '选择角色',
-      placeHolder: '请选择角色',
-      options: []
-    },
-    {
-      field: 'departmentId',
-      type: 'select',
-      label: '选择部门',
-      placeHolder: '请选择部门',
-      options: []
-    }
-  ]
+
+  //修改渲染的表单 给select增加option
   const formItemRef = useMemo(() => {
+    const newformItems = [...formItems]
     const roleOption = formItems?.find((item) => item.field === 'roleId')
     const departmentOption = formItems?.find((item) => item.field === 'departmentId')
     roleOption.options = entireRoles.map((item) => ({ label: item.name, value: item.id }))
@@ -61,32 +22,40 @@ function WHModal(props) {
       label: item.name,
       value: item.id
     }))
-    return formItems
-  }, [entireRoles, entireDepartments])
-  console.log('formItemRef', formItemRef)
+    return newformItems
+  }, [entireRoles, entireDepartments, formItems])
+
+  //表单提交
+  const handleFormClick = () => {
+    pageModalRef?.current.validateFields().then((res, err) => {
+      if (!err) {
+        if (formDataSubmitMode === 'add') {
+          console.log('现在是添加提交')
+        } else {
+          console.log('现在是编辑提交')
+        }
+      }
+    })
+  }
   return (
     <WHModalWrapper>
       <Modal
         title="新建用户"
         width="40%"
         destroyOnClose
-        visible={modalVisible}
+        visible={isModalVisible}
         onOk={handleFormClick}
-        onCancel={toggleModalVisible}
+        onCancel={() => {
+          console.log('点击取消')
+          closeModal()
+        }}
         forceRender
         afterClose={() => {
           console.log('完全关闭重置表单')
           pageModalRef?.current.resetFields()
         }}
       >
-        <WHForm
-          ref={pageModalRef}
-          formSize="large"
-          formName="usersmodal"
-          isShowFooter={false}
-          colLayout={{ span: 24 }}
-          formItems={formItemRef}
-        />
+        <WHForm ref={pageModalRef} formItems={formItemRef} {...rest} />
       </Modal>
     </WHModalWrapper>
   )

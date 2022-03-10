@@ -1,9 +1,34 @@
 import { useRef } from 'react'
-import { useBoolean } from 'ahooks'
+import { useBoolean, useToggle } from 'ahooks'
 
-export const usePageMoadl = () => {
+export const usePageModal = () => {
   const pageModalFormRef = useRef()
-  const [isModalVisible, { toggle: toggleModalVisible }] = useBoolean(false)
+  const [isModalVisible, { setFalse: closeModal, setTrue: openModal }] = useBoolean(false)
 
-  return [pageModalFormRef, isModalVisible, toggleModalVisible]
+  console.log(closeModal, 'closeModal')
+  console.log(openModal, 'openModal')
+  const [formDataSubmitMode, { set }] = useToggle('add')
+
+  const changeFormDataSubmitMode = (mode, formData = null) => {
+    if (mode === 'edit') {
+      openModal()
+      console.log('编辑点击')
+      pageModalFormRef?.current.setFieldsValue(formData)
+      set(mode)
+    } else {
+      openModal()
+      console.log('添加点击')
+      set(mode)
+    }
+  }
+
+  console.log('我明明是函数changeFormDataSubmitMode', changeFormDataSubmitMode)
+  return {
+    pageModalFormRef,
+    isModalVisible,
+    openModal,
+    closeModal,
+    formDataSubmitMode,
+    changeFormDataSubmitMode
+  }
 }
