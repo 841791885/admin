@@ -24,7 +24,8 @@ function WHForm(props) {
     isShowFooter,
     queryBtnClick,
     resetBtnClick,
-    getFormDataRef
+    getFormDataRef,
+    isHidden
   } = props
 
   const handleQueryClick = () => {
@@ -65,6 +66,12 @@ function WHForm(props) {
         return (
           <Form.Item label={formItem.label} name={formItem.field} rules={formItem.rules}>
             <NewDatePicker placeholder={formItem.placeholder} />
+          </Form.Item>
+        )
+      case 'password':
+        return isHidden ? null : (
+          <Form.Item label={formItem.label} name={formItem.field} rules={formItem.rules}>
+            <Input.Password placeholder={formItem.placeholder} />
           </Form.Item>
         )
       default:

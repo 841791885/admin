@@ -4,7 +4,7 @@ import { useSetState, useDeepCompareEffect } from 'ahooks'
 import { Button, Table, Pagination, Tag, Space } from 'antd'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 
-import { getPageListData } from '@/store/main/system/actionCreators'
+import { getPageListData, deletePageListItem } from '@/store/main/system/actionCreators'
 import { utcToDateTimeFormat } from '@/utils/date-formate'
 
 import { WHTableWrapper, WHTableHeaderWrapper, WHTabelFooterWrapper } from './style'
@@ -64,13 +64,22 @@ function WHTable(props) {
     changeFormDataSubmitMode('add')
   }
   const editClick = (rowItem) => {
-    console.log(rowItem)
+    console.log(rowItem, '--------')
     console.log('编辑')
     changeFormDataSubmitMode('edit', rowItem)
   }
-  const deleteClick = (rowItem) => {
-    console.log(rowItem)
+  const deleteClick = (id) => {
     console.log('删除')
+    dispatch(
+      deletePageListItem({
+        id,
+        pageName,
+        queryInfo: {
+          offset: pageInfo.currentPage * pageInfo.pageSize,
+          size: pageInfo.pageSize
+        }
+      })
+    )
   }
 
   const rendertableItemCol = (tableItemCol) => {
@@ -136,7 +145,7 @@ function WHTable(props) {
                   type="danger"
                   icon={<DeleteOutlined />}
                   onClick={() => {
-                    deleteClick(record)
+                    deleteClick(record.id)
                   }}
                 >
                   删除

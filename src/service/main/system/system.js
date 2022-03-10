@@ -6,7 +6,6 @@ export function getPageList(pageUrl, queryInfo) {
     data: queryInfo
   })
 }
-
 export function deletePageData(pageUrl) {
   return requestIns.delete({
     url: pageUrl

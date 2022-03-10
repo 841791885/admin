@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { useBoolean, useToggle } from 'ahooks'
 
-export const usePageModal = () => {
+export const usePageModal = (modalConfig) => {
   //弹框表单ref
   const pageModalFormRef = useRef()
 

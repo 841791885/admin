@@ -19,7 +19,7 @@ class Request {
     this.instance.interceptors.response.use(
       (res) => {
         store.dispatch(changeLoadingAction(false))
-        return res.data
+        return res?.data
       },
       (err) => {
         store.dispatch(changeLoadingAction(false))
@@ -33,7 +33,7 @@ class Request {
       this.instance
         .request(config)
         .then((res) => {
-          resolve(res.data)
+          resolve(res?.data)
         })
         .catch((err) => {
           reject(err)

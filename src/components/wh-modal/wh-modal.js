@@ -1,16 +1,28 @@
 import React, { forwardRef, useMemo } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { Modal } from 'antd'
+
+import { editPageListItem, newPageListItem } from '@/store/main/system/actionCreators'
 
 import WHForm from '@/components/wh-form/wh-form'
 
 import { WHModalWrapper } from './style'
-import { useSelector } from 'react-redux'
+
 function WHModal(props) {
-  const { isModalVisible, pageModalRef, formDataSubmitMode, closeModal, formItems, ...rest } = props
+  const {
+    pageName,
+    isModalVisible,
+    pageModalRef,
+    formDataSubmitMode,
+    closeModal,
+    formItems,
+    ...rest
+  } = props
   const { entireRoles, entireDepartments } = useSelector((state) => ({
     entireRoles: state.common.entireRoles,
     entireDepartments: state.common.entireDepartments
   }))
+  const dispatch = useDispatch()
 
   //修改渲染的表单 给select增加部门和用户增加option
   const formItemRef = useMemo(() => {
@@ -30,9 +42,12 @@ function WHModal(props) {
     pageModalRef?.current.validateFields().then((res, err) => {
       if (!err) {
         if (formDataSubmitMode === 'add') {
-          console.log('现在是添加提交')
+          dispatch(newPageListItem({ pageName, listItemData: res }))
+          closeModal()
         } else {
-          console.log('现在是编辑提交')
+          const submitId = pageModalRef.current.getFieldsValue(['id'])
+          dispatch(editPageListItem({ pageName, id: submitId, listItemData: res }))
+          closeModal()
         }
       }
     })

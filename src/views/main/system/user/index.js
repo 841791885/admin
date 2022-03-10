@@ -48,6 +48,7 @@ const User = memo(() => {
       ></WHTable>
       <WHModal
         ref={pageModalFormRef}
+        pageName="users"
         isModalVisible={isModalVisible}
         closeModal={closeModal}
         formDataSubmitMode={formDataSubmitMode}

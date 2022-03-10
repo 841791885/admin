@@ -42,31 +42,82 @@ const changeMenuListAction = (menuList) => ({
   menuList
 })
 
-export const getPageListData = (payload) => {
-  return async (dispatch) => {
-    const pageName = payload.pageName
-    const pageUrl = `/${pageName}/list`
-    if (pageUrl.length === 0) return
-    const { totalCount, list } = await getPageList(pageUrl, payload.queryInfo)
+export const getPageListData = (payload) => async (dispatch) => {
+  const pageName = payload.pageName
+  const pageUrl = `/${pageName}/list`
+  if (pageUrl.length === 0) return
+  const { totalCount, list } = await getPageList(pageUrl, payload.queryInfo)
 
-    console.log('list', list)
-    console.log('totalCount', totalCount)
-    switch (pageName) {
-      case 'users':
-        dispatch(changeUsersTotalCountAction(totalCount))
-        dispatch(changeUsersListAction(list))
-        break
-      case 'department':
-        dispatch(changeDepartmentTotalCountAction(totalCount))
-        dispatch(changeDepartmentListAction(list))
-        break
-      case 'role':
-        dispatch(changeRoleTotalCountAction(totalCount))
-        dispatch(changeRoleListAction(list))
-        break
-      case 'menu':
-        dispatch(changeMenuListAction(list))
-        break
-    }
+  console.log('list', list)
+  console.log('totalCount', totalCount)
+  switch (pageName) {
+    case 'users':
+      dispatch(changeUsersTotalCountAction(totalCount))
+      dispatch(changeUsersListAction(list))
+      break
+    case 'department':
+      dispatch(changeDepartmentTotalCountAction(totalCount))
+      dispatch(changeDepartmentListAction(list))
+      break
+    case 'role':
+      dispatch(changeRoleTotalCountAction(totalCount))
+      dispatch(changeRoleListAction(list))
+      break
+    case 'menu':
+      dispatch(changeMenuListAction(list))
+      break
+    default:
+      break
   }
+}
+
+export const deletePageListItem = (payload) => async (dispatch) => {
+  const pageName = payload.pageName
+  const deleteId = payload.id
+  if (!deleteId) return
+  const pageUrl = `/${pageName}/${deleteId}`
+  await deletePageData(pageUrl)
+  dispatch(
+    getPageListData({
+      pageName,
+      queryInfo: {
+        offset: 0,
+        size: 10
+      }
+    })
+  )
+}
+
+export const newPageListItem = (payload) => async (dispatch) => {
+  const pageName = payload.pageName
+  const pageUrl = `/${pageName}`
+  const listItemData = payload.listItemData
+  await newPageData(pageUrl, listItemData)
+  dispatch(
+    getPageListData({
+      pageName,
+      queryInfo: {
+        offset: 0,
+        size: 10
+      }
+    })
+  )
+}
+
+export const editPageListItem = (payload) => async (dispatch) => {
+  const pageName = payload.pageName
+  const editId = payload.id
+  if (!editId) return
+  const pageUrl = `/${pageName}/${editId}`
+  const listItemData = payload.listItemData
+  await editPageData(pageUrl, listItemData)
+  dispatch(
+    getPageListData({
+      pageName,
+      queryInfo: {
+        offset: 0,
+        size: 10
+      }
+    })
+  )
 }
